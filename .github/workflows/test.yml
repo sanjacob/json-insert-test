@@ -1,0 +1,26 @@
+name: Test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: sanjacob/json-insert@master
+        with:
+          file: example.json
+          index: -2
+          item: |
+            {
+              "id": 3, "name": "Beans"
+            }
+      - run: ls
+      - run: cat example.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Output
+          path: example.json
